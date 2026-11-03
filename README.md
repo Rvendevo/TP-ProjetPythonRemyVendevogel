@@ -4,9 +4,15 @@
 
 Ce projet simule un point `controller` dans un espace tridimensionnel et détecte sa relation avec des cubes et des boîtes rectangulaires, y compris des boîtes tournées.
 
-Il est réalisé en Python et fonctionne dans le terminal. Aucun casque VR ni bibliothèque externe n'est nécessaire.
+Il fonctionne dans le terminal. Aucun casque VR ni bibliothèque externe n'est nécessaire.
 
-## Problématique
+Ce projet est personnel : au départ de ces vacances, j'ai préparé un jeu en VR pour un événement communautaire. Le suivi de mes manettes a fait défaut et, en fin de soirée, je n'ai pas pu jouer en réalité virtuelle, mais simplement sur ordinateur. Le lendemain, j'ai décidé que cela serait mon projet Python, dû au fait qu'il m'a causé un grand trauma (exagération).
+
+La nature du projet étant plutôt compliquée, j'ai créé un programme qui regarde simplement si un point (la manette dans ce contexte) est en contact avec un objet, s'il est proche avec une certaine tolérance donnée ou s'il est suffisamment éloigné. Quelques tests sont préprogrammés, avec un environnement préfait, quelques exemples de tests dans ce Markdown et un affichage pour faire ces propres tests.
+
+L'intelligence artificielle a été utilisée dans l'orientation du projet (ce qui est pertinent et ce qui ne l'est pas, suggestions, conseille mineur), la vérification du code (intégration mineure de code réparé/correction) et quelques réexplications sur certaines notions comme les matrices.
+
+## Sujet
 
 **Comment les transformations matricielles et la précision des nombres flottants influencent-elles la fiabilité d'un détecteur de collision et de proximité dans un espace 3D ?**
 
@@ -29,12 +35,12 @@ Une boîte est définie par son centre, ses dimensions et ses angles de rotation
 
 Pour les demi-dimensions `hx`, `hy`, `hz` et le point local `(x, y, z)` :
 
-```text
+
 dx = max(abs(x) - hx, 0)
 dy = max(abs(y) - hy, 0)
 dz = max(abs(z) - hz, 0)
 distance = sqrt(dx*dx + dy*dy + dz*dz)
-```
+
 
 La classification est :
 - `COLLISION` si la distance est considérée nulle selon la tolérance choisie ;
@@ -47,13 +53,11 @@ Le modèle traite le contrôleur comme un point sans rayon. Il ne s'agit pas d'u
 
 Python 3.10 ou plus récent recommandé. Aucun paquet externe n'est requis.
 
-Dans un terminal, place-toi dans le dossier du projet puis lance :
+Dans un terminal, placez-vous dans le dossier du projet puis lancez :
 
 ```bash
 python main.py
 ```
-
-Sur certains systèmes, la commande peut être `python3 main.py`.
 
 ## Menu principal
 
@@ -66,15 +70,12 @@ Sur certains systèmes, la commande peut être `python3 main.py`.
 
 ## Tests automatiques
 
-Lance :
-
-```bash
-python -m unittest -v
-```
+Lancez :
+test_projet.py
 
 Les tests vérifient les distances connues, les états, les rotations et le retour des coordonnées après transformation inverse.
 
-## Expériences à réaliser pour le rapport
+## Expériences pertinentes à réaliser 
 
 1. **Validation géométrique** : tester des points à l'intérieur, sur la surface, près d'une face et en diagonale.
 2. **Marge de sécurité** : comparer plusieurs marges sur les mêmes points.
@@ -83,20 +84,16 @@ Les tests vérifient les distances connues, les états, les rotations et le reto
 5. **Matrices** : transformer un point vers le repère mondial puis revenir au repère local ; mesurer l'erreur maximale.
 6. **Performance** : mesurer plusieurs tailles de scène. Les résultats varient selon l'ordinateur ; répéter les mesures et comparer les tendances.
 
-Pour un rapport solide, noter les paramètres, les résultats observés et une interprétation. Ne pas inventer de résultats : exécuter le programme et compléter le compte rendu avec ses propres mesures.
-
 ## Limites
 
 - Le contrôleur est un point, pas une sphère ayant un rayon.
-- Les objets sont des boîtes rectangulaires ; les maillages complexes ne sont pas traités.
+- Les objets sont des boîtes rectangulaires ; les structures complexes ne sont pas traités.
 - Les angles suivent la convention `Rz @ Ry @ Rx` (rotation X, puis Y, puis Z appliquées au vecteur colonne).
 - La tolérance numérique est un paramètre de modélisation à justifier.
 - Les mesures de performance dépendent de l'environnement.
-- Le programme est un projet pédagogique, pas un système de sécurité certifié.
 
 ## Plan d'amélioration possible
 
 - Ajouter un rayon au contrôleur.
-- Enregistrer les scènes dans un fichier JSON.
+- Enregistrer les scènes dans un fichier.
 - Ajouter des tests aléatoires reproductibles.
-- Comparer l'inversion générale de la matrice à une inversion spécialisée des transformations rigides.
